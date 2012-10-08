@@ -5,10 +5,13 @@
     "version": "1",
     "app": {
         "launch": {
-            "local_path": "index.html"
+            "local_path": "app/index.html"
         }
     },
     "icons": {
-        "128": "assets/images/128.png"
+        "128": "app/img/logo-128.png",
+        "64": "app/img/logo-64.png",
+        "48": "app/img/logo-48.png",
+        "16": "app/img/logo-16.png"
     }
 }
