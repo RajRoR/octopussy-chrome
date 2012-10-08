@@ -9,8 +9,12 @@
 
 angular.module('Github', ['ngResource']).
     factory('GithubRepo', function ($resource) {
-        var Project = $resource('https://api.github.com/users/:user/repos');
-        return Project;
+        var project = $resource('https://api.github.com/users/:user/repos');
+        return project;
+    }).
+    factory('GithubMilestone', function ($resource) {
+        var milestones = $resource('https://api.github.com/repos/:user/:repo/milestones');
+        return milestones;
     });
 
 angular.module('reportingManagerApp.services', ['Github']).

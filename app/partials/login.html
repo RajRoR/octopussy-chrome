@@ -1,0 +1,7 @@
+<form class="form-horizontal" ng-submit="saveGithubUser()">
+  <input ng-model="github_username" type="text" name="github_username" placeholder="Github user name"
+         title="Add your Github user name here to get information about your projects" required>
+  <input ng-model="password" type="password" name="github-password" placeholder="Github password (optional)"
+         title="We need your password to access your private repositories. We don't save the password. Instead we would exchange it with a secure token from Github and would use it for accessing your private information. This gives you the power to revoke access to our application from your Github settings.">
+  <button type="submit" class="btn">Fetch Projects</button>
+</form>

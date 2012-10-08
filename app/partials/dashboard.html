@@ -4,8 +4,9 @@
 
     <input type="text" ng-model="searchProject" class="search-query span12" placeholder="Search">
     <ul id="projects" class="nav nav-pills nav-stacked">
-      <li ng-repeat="project in projects | filter:searchProject">
-        <a target="_blank" href="{{project.url}}">{{project.name}}</a>
+      <li ng-class="getClass(project.name)" ng-click="onSelect()"
+          ng-repeat="project in projects | filter:searchProject">
+        <a>{{project.name}}</a>
       </li>
     </ul>
   </div>
@@ -23,31 +24,25 @@
            target="_blank" class="btn">Save Report <i class="icon-download"></i></a>
       </div>
     </div>
-    <div id="report">
-      <h4 class="pagination-centered">Project Health</h4>
+    <div id="report" ng-controller="MilestoneCtrl">
+      <div ng-hide="milestones == null">
+        <h4 class="pagination-centered">Project Health</h4>
 
-      <div class="progress progress-success">
-        <div class="bar" style="width: 70%;"></div>
+        <div class="progress progress-success">
+          <div class="bar" style="width: {{health()}}%;"></div>
+        </div>
       </div>
       <div class="row-fluid">
         <div class="span3">
           <h4 class="pagination-centered">Milestones</h4>
           <ul id="milestones" class="container-fluid nav nav-tabs nav-stacked">
-            <li class="active">
+            <li ng-class="getClass(milestone.id)" ng-repeat="milestone in milestones">
               <a href="#">
-                New UI<br/><span class="muted">(Due today)</span>
+                {{milestone.title}}<br/><span class="muted">{{dueOn(milestone)}}</span>
 
                 <div class="progress progress-success">
-                  <div class="bar" style="width: 70%;"></div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                Week ending on blah<br/><span class="muted">(due in 5 days)</span>
-
-                <div class="progress progress-danger">
-                  <div class="bar" style="width: 40%;"></div>
+                  <div class="bar"
+                       style="width: {{percentCompletion(milestone) + '%'}}"></div>
                 </div>
               </a>
             </li>
