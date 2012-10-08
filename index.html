@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="rptMgrApp" ng-csp>
+<html ng-app="reportingManager" ng-csp>
 <head>
   <meta charset="utf-8"/>
   <title>Reporting Manager</title>
@@ -13,10 +13,16 @@
 <div class="container-fluid">
   <div class="navbar">
     <div class="navbar-inner">
-      <a class="brand" href="index.html">Reporting Manager: Welcome {{username}}!</a>
+      <a class="brand" href="index.html">Reporting Manager  </a>
 
-      <ul id="top-right-nav" class="nav pull-right">
-        <li><a href="login">Login</a></li>
+      <ul class="nav pull-right">
+        <li>
+          <form class="navbar-form" ng-submit="saveGithubUser()">
+            <input ng-model="username" type="text" name="github-username" placeholder="Github user name" required>
+            <input ng-model="password" type="password" name="github-password" placeholder="Github password" title="Submitting your password would allow you to see your private repositories too.">
+            <button type="submit" class="btn">Save</button>
+          </form>
+        </li>
         <li><a href="#">Export Settings&nbsp;<i class="icon-briefcase"></i></a></li>
       </ul>
     </div>
@@ -26,7 +32,7 @@
     <div class="span2" ng-controller="ProjectCtrl">
       <h4>Projects</h4>
 
-      <input type="text" ng-model="searchProject" class="search-query input-medium" placeholder="Search">
+      <input type="text" ng-model="searchProject" class="search-query span12" placeholder="Search projects...">
       <ul id="projects" class="nav nav-pills nav-stacked">
         <li ng-repeat="project in projects | filter:searchProject">
           <a target="_blank" href="{{project.url}}">{{project.name}}</a>

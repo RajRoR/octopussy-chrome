@@ -1,5 +1,19 @@
-var rptMgrApp = angular.module('rptMgrApp', []);
+var reportingManager = angular.module('reportingManager', []);
 
-rptMgrApp.controller('AppCtrl', function ($scope) {
-    $scope.username = 'Vibhor';
+reportingManager.controller('AppCtrl', function ($scope) {
+    if (localStorage['gh-username']) {
+        $scope.username = localStorage['gh-username'];
+    }
+    else {
+        localStorage['gh-username'] = $scope.username = 'vibhor86';
+    }
+
+    reportingManager.getUserName = function () {
+        return $scope.username;
+    }
+
+    function saveGithubUser(){
+
+    }
 });
+
