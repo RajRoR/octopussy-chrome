@@ -69,4 +69,14 @@ function MilestoneCtrl($scope, $location, $routeParams, GithubMilestone) {
             return closedIssues / (openIssues + closedIssues) * 100;
         }
     }
+
+    $scope.onSelect = function () {
+        $location.path(['', 'github', $routeParams.user, $routeParams.repo, this.milestone.number, ''].join('/'));
+    }
+}
+
+function TaskCtrl($scope, $location, $routeParams, GithubIssue) {
+    if ($routeParams.milestone != null) {
+        $scope.issues = GithubIssue.query({user:$routeParams.user, repo:$routeParams.repo, milestone:$routeParams.milestone})
+    }
 }

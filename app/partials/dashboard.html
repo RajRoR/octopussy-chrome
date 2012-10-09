@@ -24,8 +24,8 @@
            target="_blank" class="btn">Save Report <i class="icon-download"></i></a>
       </div>
     </div>
-    <div id="report" ng-controller="MilestoneCtrl">
-      <div ng-hide="milestones == null">
+    <div ng-hide="milestones == null" id="report" ng-controller="MilestoneCtrl">
+      <div>
         <h4 class="pagination-centered">Project Health</h4>
 
         <div class="progress progress-success">
@@ -36,8 +36,8 @@
         <div class="span3">
           <h4 class="pagination-centered">Milestones</h4>
           <ul id="milestones" class="container-fluid nav nav-tabs nav-stacked">
-            <li ng-class="getClass(milestone.id)" ng-repeat="milestone in milestones">
-              <a href="#">
+            <li ng-class="getClass(milestone.id)" ng-repeat="milestone in milestones" ng-click="onSelect()">
+              <a>
                 {{milestone.title}}<br/><span class="muted">{{dueOn(milestone)}}</span>
 
                 <div class="progress progress-success">
@@ -48,8 +48,8 @@
             </li>
           </ul>
         </div>
-        <div class="span9">
-          <h4 class="pagination-centered">To Do</h4>
+        <div ng-hide="issues == null" class="span9" ng-controller="TaskCtrl">
+          <h4 class="pagination-centered">Tasks</h4>
 
           <div class="well">
             <table id="tasks" class="table table-striped">
@@ -57,37 +57,25 @@
               <tr>
                 <td><strong>Name</strong></td>
                 <td><strong>Labels</strong></td>
-                <td><strong>Related Milestones</strong></td>
+                <td><strong>Assigned to</strong></td>
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td><a href="#" title="View in Github">Sign in form does not work in internet explorer</a></td>
+              <tr ng-repeat="issue in issues">
+                <td><a href="{{issue.html_url}}" target="_blank" title="View in Github">{{issue.title}}</a></td>
                 <td>
-                  <span class="label label-important">Bug</span>&nbsp;
-                  <span class="label label-important">Regression</span>
+                  <ul class="unstyled">
+                    <li ng-repeat="label in issue.labels">
+                      <span class="label" style="background-color: #{{label.color}}">{{label.name}}</span>&nbsp;
+                    </li>
+                  </ul>
                 </td>
                 <td>
-                  <span class="label label-info">Release 2.0</span>&nbsp;
-                  <span class="label label-info">Week ending 5 Dec 2012</span>
-                </td>
-              </tr>
-              <tr>
-                <td><a href="#" title="View in Github">Prepare Contact Us page</a></td>
-                <td>
-                  <span class="label label-success">Enhancement</span>
-                </td>
-                <td>
-                  <span class="label label-info">Release 2.0</span>
-                </td>
-              </tr>
-              <tr>
-                <td><a href="#" title="View in Github">Prepare FAQ page</a></td>
-                <td>
-                  <span class="label label-success">Enhancement</span>
-                </td>
-                <td>
-                  <span class="label label-info">Release 2.0</span>
+                  <img
+                      ng-src="{{issue.assignee.avatar_url}}"
+                      style="width:30px">
+                  &nbsp;
+                  <span>{{issue.assignee.login}}</span>
                 </td>
               </tr>
               </tbody>

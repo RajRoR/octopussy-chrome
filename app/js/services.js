@@ -15,6 +15,10 @@ angular.module('Github', ['ngResource']).
     factory('GithubMilestone', function ($resource) {
         var milestones = $resource('https://api.github.com/repos/:user/:repo/milestones');
         return milestones;
+    }).
+    factory('GithubIssue', function ($resource) {
+        var issues = $resource('https://api.github.com/repos/:user/:repo/issues?milestone=:milestone');
+        return issues;
     });
 
 angular.module('reportingManagerApp.services', ['Github']).
