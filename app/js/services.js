@@ -9,14 +9,28 @@
 
 angular.module('Github', ['ngResource']).
     factory('GithubRepo', function ($resource) {
+		
+        var project = $resource('https://api.github.com/user/repos?access_token=:access_token');
+        return project;
+    }).
+	factory('GithubRepo2', function ($resource) {
+		
         var project = $resource('https://api.github.com/users/:user/repos');
         return project;
     }).
     factory('GithubMilestone', function ($resource) {
+        var milestones = $resource('https://api.github.com/repos/:user/:repo/milestones?access_token=:access_token');
+        return milestones;
+    }).
+    factory('GithubMilestone2', function ($resource) {
         var milestones = $resource('https://api.github.com/repos/:user/:repo/milestones');
         return milestones;
     }).
     factory('GithubIssue', function ($resource) {
+        var issues = $resource('https://api.github.com/repos/:user/:repo/issues?milestone=:milestone&access_token=:access_token');
+        return issues;
+    }).
+factory('GithubIssue2', function ($resource) {
         var issues = $resource('https://api.github.com/repos/:user/:repo/issues?milestone=:milestone');
         return issues;
     });

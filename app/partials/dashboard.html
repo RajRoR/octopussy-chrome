@@ -4,9 +4,9 @@
 
     <input type="text" ng-model="searchProject" class="search-query span12" placeholder="Search">
     <ul id="projects" class="nav nav-pills nav-stacked">
-      <li ng-class="getClass(project.name)" ng-click="onSelect(project.full_name)"
+      <li ng-class="getClass(project.name)" ng-click="onSelect(project.owner.login,project.name)"
           ng-repeat="project in projects | filter:searchProject" >
-        <a>{{project.name}}</a>
+        <a>{{project.full_name}}</a>
       </li>
     </ul>
   </div>

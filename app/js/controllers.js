@@ -4,6 +4,7 @@
 
 function UserCtrl($scope, $location) {
 	$scope.github_password = ""
+	localStorage["owner"]=""
 	localStorage["name"]=""	
     $scope.saveGithubUser = function () {
 	$scope.github_username = document.login.github_username.value;
@@ -27,30 +28,27 @@ function UserCtrl($scope, $location) {
 	}
 }
 
- //angular.module('project', ['Github']);
+ angular.module('project', ['Github']);
 
-function ProjectCtrl($scope, $location, $routeParams, GithubRepo) {
-	
+function ProjectCtrl($scope, $location, $routeParams, GithubRepo,GithubRepo2) {
+		$scope.projects = GithubRepo.query({access_token:localStorage["token"]})
+
 		if(localStorage["token"])
 		  {
-			
-		  $.ajax({
-			  url: "https://api.github.com/user/repos?access_token="+localStorage["token"]
-			  }).done(function(ress) { 
-				$scope.projects = ress
-			});
+			$scope.projects = GithubRepo.query({access_token:localStorage["token"]})
+
+		
 		  }else
 		   {
-			 $scope.api = octo.api().token('')
-		 	$scope.api.get('/user/repos').on('success',function (res){$scope.projects = res })()
-			$.ajax({
-			  url: "https://api.github.com/users/"+$routeParams.user+"/repos"
-			  }).done(function(ress) { 
-				$scope.projects = ress
-			});
+			alert($routeParams.user)
+			$scope.projects = GithubRepo2.query({user:$routeParams.user})
+
+		
 			}
-	       $scope.onSelect = function (name) {
+	       $scope.onSelect = function (owner,name) {
                        // alert(name);
+			localStorage["owner"] = ""
+			localStorage["owner"] =  owner
  			localStorage["name"] = ""
 			localStorage["name"] =  name
 			$location.path(['', 'github', $routeParams.user, this.project.name, ''].join('/'));
@@ -66,28 +64,24 @@ function ProjectCtrl($scope, $location, $routeParams, GithubRepo) {
     }
 }
 
-function MilestoneCtrl($scope, $location, $routeParams, GithubMilestone) {
+function MilestoneCtrl($scope, $location, $routeParams, GithubMilestone,GithubMilestone2) {
   
     self.selectedMilestone = null;
 if(localStorage["name"])
 	{
+	var user = localStorage["owner"]
+	var name = localStorage["name"]
    	       if(localStorage["token"])
+
 		    {
-		     $.ajax({
-			  url: "https://api.github.com/repos/"+localStorage["name"]+"/milestones?access_token="+localStorage["token"]
-                                
-			  }).done(function(ress) { 
-			 	$scope.milestones = ress
-                                
-			});
+			
+			$scope.milestones = GithubMilestone.query({access_token:localStorage["token"],user:user,repo:name })
+		     
 		     }
             else
 		     {
-			$.ajax({
-			  url: "https://api.github.com/repos/"+localStorage["name"]+"/milestones"
-			  }).done(function(ress) { 
-			 	$scope.milestones = ress
-			});
+			$scope.milestones = GithubMilestone2.query({user:user,repo:name})
+			
 			}
 } else
 {
@@ -139,24 +133,16 @@ $scope.milestones = []
 }
 
 
-function TaskCtrl($scope, $location, $routeParams, GithubIssue) {
+function TaskCtrl($scope, $location, $routeParams, GithubIssue,GithubIssue2) {
 	if ($routeParams.milestone != null) {
 if(localStorage["name"])
 {
 		if (localStorage["token"]) {
-			$.ajax({
-				url : "https://api.github.com/repos/" + localStorage["name"] + "/issues?milestone=" + $routeParams.milestone + "&access_token=" + localStorage["token"]
-
-			}).done(function(ress) {
-				$scope.issues = ress
-
-			});
+			$scope.issues = GithubIssue.query({user:localStorage["owner"], repo:localStorage["name"], milestone:$routeParams.milestone,access_token:localStorage["token"]})
+			
 		} else {
-			$.ajax({
-				url : "https://api.github.com/repos/" + localStorage["name"] + "/issues?milestone=" + $routeParams.milestone
-			}).done(function(ress) {
-				$scope.issues = ress
-			});
+			$scope.issues = GithubIssue2.query({user:localStorage["owner"], repo:localStorage["name"], milestone:$routeParams.milestone})
+			
 		}
 }
  else
