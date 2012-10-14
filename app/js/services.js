@@ -30,9 +30,25 @@ angular.module('Github', ['ngResource']).
         var issues = $resource('https://api.github.com/repos/:user/:repo/issues?milestone=:milestone&access_token=:access_token');
         return issues;
     }).
-factory('GithubIssue2', function ($resource) {
+    factory('GithubIssue2', function ($resource) {
         var issues = $resource('https://api.github.com/repos/:user/:repo/issues?milestone=:milestone');
         return issues;
+    }).
+   factory('myHttpInterceptor', function ($q, $window) {
+        return function (promise) {
+            return promise.then(function (response) {
+                // do something on success
+                // todo hide the spinner
+                $('#loading').hide();
+                return response;
+
+            }, function (response) {
+                // do something on error
+                // todo hide the spinner
+                $('#loading').hide();
+                return $q.reject(response);
+            });
+        };
     });
 
 angular.module('reportingManagerApp.services', ['Github']).

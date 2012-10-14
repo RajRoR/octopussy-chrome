@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('reportingManagerApp', ['reportingManagerApp.filters', 'reportingManagerApp.services', 'reportingManagerApp.directives']).
+angular.module('reportingManagerApp', ['reportingManagerApp.filters', 'reportingManagerApp.services', 'reportingManagerApp.directives','SharedServices']).
     config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/', {templateUrl:'partials/login.html', controller:UserCtrl})
     $routeProvider.when('/github/:user', {templateUrl:'partials/dashboard.html', controller:ProjectCtrl});

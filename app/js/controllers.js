@@ -28,6 +28,18 @@ function UserCtrl($scope, $location) {
 	}
 }
 
+angular.module('SharedServices', [])
+    .config(function ($httpProvider) {
+        $httpProvider.responseInterceptors.push('myHttpInterceptor');
+        var spinnerFunction = function (data, headersGetter) {
+            // todo start the spinner here
+            $('#loading').show();
+            return data;
+        };
+        $httpProvider.defaults.transformRequest.push(spinnerFunction);
+    })
+
+
  angular.module('project', ['Github']);
 
 function ProjectCtrl($scope, $location, $routeParams, GithubRepo,GithubRepo2) {
