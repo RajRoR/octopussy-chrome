@@ -52,13 +52,13 @@ function ProjectCtrl($scope, $location, $routeParams, GithubRepo,GithubRepo2) {
 		
 		  }else
 		   {
-			alert($routeParams.user)
+			
 			$scope.projects = GithubRepo2.query({user:$routeParams.user})
 
 		
 			}
 	       $scope.onSelect = function (owner,name) {
-                       // alert(name);
+                       
 			localStorage["owner"] = ""
 			localStorage["owner"] =  owner
  			localStorage["name"] = ""
