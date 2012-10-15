@@ -2,35 +2,44 @@
 
 /* Controllers */
 
-function UserCtrl($scope, $location,$routeParams) {
+function UserCtrl($scope, $location) {
 	$scope.github_password = ""
-	localStorage["owner"]=""
-	localStorage["name"]=""	
-if(!$routeParams.user)
+	
+if(!localStorage["user"])
 {
 	$location.path([''].join('/'));
 }
     $scope.saveGithubUser = function () {
 	$scope.github_username = document.login.github_username.value;
 	$scope.github_password = document.login.github_password.value;
-
 	if($scope.github_username && $scope.github_password) 
 		{
 			$scope.api = octo.api().username($scope.github_username).password($scope.github_password);
 			$scope.api.post('/authorizations', {note: 'my script', scopes: ['repo']})
 		  .on('success', function(res){
 			localStorage["token"] =  res.body.token
+			localStorage["user"] =  $scope.github_username
 			$location.path(['', 'github', $scope.github_username, ].join('/'));
 			$scope.$apply();
 		  })();
         	}
 		else if($scope.github_password == "" )
 		{	localStorage["token"] =  ""
+			localStorage["user"] =  $scope.github_username
 			$location.path(['', 'github', $scope.github_username, ].join('/'));	
 			//$scope.$apply();
 		} 
  	
-	}
+	 }
+
+		$scope.removeGithubUser = function () {
+			localStorage["owner"]=""
+			localStorage["name"]=""	
+			localStorage["user"] = ""
+			$location.path([''].join('/'));
+		}
+
+
 }
 
 angular.module('SharedServices', [])
@@ -48,7 +57,10 @@ angular.module('SharedServices', [])
  angular.module('project', ['Github']);
 
 function ProjectCtrl($scope, $location, $routeParams, GithubRepo,GithubRepo2) {
-
+if(!localStorage["user"])
+{
+	$location.path([''].join('/'));
+}
 		if(localStorage["token"])
 		  {
 			$scope.projects = GithubRepo.query({access_token:localStorage["token"]})
