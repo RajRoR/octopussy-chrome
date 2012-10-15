@@ -14,8 +14,7 @@ angular.module('Github', ['ngResource']).
         return project;
     }).
 	factory('GithubRepo2', function ($resource) {
-		
-        var project = $resource('https://api.github.com/users/:user/repos');
+	var project = $resource('https://api.github.com/users/:user/repos');
         return project;
     }).
     factory('GithubMilestone', function ($resource) {

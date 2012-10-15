@@ -2,13 +2,18 @@
 
 /* Controllers */
 
-function UserCtrl($scope, $location) {
+function UserCtrl($scope, $location,$routeParams) {
 	$scope.github_password = ""
 	localStorage["owner"]=""
 	localStorage["name"]=""	
+if(!$routeParams.user)
+{
+	$location.path([''].join('/'));
+}
     $scope.saveGithubUser = function () {
 	$scope.github_username = document.login.github_username.value;
 	$scope.github_password = document.login.github_password.value;
+
 	if($scope.github_username && $scope.github_password) 
 		{
 			$scope.api = octo.api().username($scope.github_username).password($scope.github_password);
@@ -22,7 +27,7 @@ function UserCtrl($scope, $location) {
 		else if($scope.github_password == "" )
 		{	localStorage["token"] =  ""
 			$location.path(['', 'github', $scope.github_username, ].join('/'));	
-			$scope.$apply();
+			//$scope.$apply();
 		} 
  	
 	}
@@ -43,23 +48,16 @@ angular.module('SharedServices', [])
  angular.module('project', ['Github']);
 
 function ProjectCtrl($scope, $location, $routeParams, GithubRepo,GithubRepo2) {
-		$scope.projects = GithubRepo.query({access_token:localStorage["token"]})
 
 		if(localStorage["token"])
 		  {
 			$scope.projects = GithubRepo.query({access_token:localStorage["token"]})
-
-		
 		  }else
 		   {
-			
 			$scope.projects = GithubRepo2.query({user:$routeParams.user})
-
-		
 			}
 	       $scope.onSelect = function (owner,name) {
-                       
-			localStorage["owner"] = ""
+  			localStorage["owner"] = ""
 			localStorage["owner"] =  owner
  			localStorage["name"] = ""
 			localStorage["name"] =  name
@@ -147,20 +145,18 @@ $scope.milestones = []
 
 function TaskCtrl($scope, $location, $routeParams, GithubIssue,GithubIssue2) {
 	if ($routeParams.milestone != null) {
-if(localStorage["name"])
-{
-		if (localStorage["token"]) {
-			$scope.issues = GithubIssue.query({user:localStorage["owner"], repo:localStorage["name"], milestone:$routeParams.milestone,access_token:localStorage["token"]})
-			
-		} else {
-			$scope.issues = GithubIssue2.query({user:localStorage["owner"], repo:localStorage["name"], milestone:$routeParams.milestone})
-			
-		}
-}
- else
-{
-$scope.milestones = []
-}
+		if(localStorage["name"])
+			{
+			if (localStorage["token"]) {
+				$scope.issues = GithubIssue.query({user:localStorage["owner"], repo:localStorage["name"], milestone:$routeParams.milestone,access_token:localStorage["token"]})
+			} else {
+				$scope.issues = GithubIssue2.query({user:localStorage["owner"], repo:localStorage["name"], milestone:$routeParams.milestone})
+			}
+	}
+	 else
+	{
+	$scope.milestones = []
+	}
 		// $scope.issues = GithubIssue.query({user:$routeParams.user, repo:$routeParams.repo, milestone:$routeParams.milestone})
 	}
 }
