@@ -7,7 +7,6 @@
 
       /* The white background content wrapper */
       .container > .content {
-        background-color: #fff;
         padding: 20px;
         margin: 0 -20px; 
         -webkit-border-radius: 10px 10px 10px 10px;
@@ -20,6 +19,7 @@
 
 	  .login-form {
 		margin-left: 65px;
+		
 	  }
 	
 	  legend {
