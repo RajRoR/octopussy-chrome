@@ -12,3 +12,4 @@ angular.module('reportingManagerApp', ['reportingManagerApp.filters', 'reporting
 }]);
 
 angular.module('project', ['githubServices']);
+

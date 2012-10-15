@@ -21,7 +21,11 @@ if(!localStorage["user"])
 			localStorage["user"] =  $scope.github_username
 			$location.path(['', 'github', $scope.github_username, ].join('/'));
 			$scope.$apply();
-		  })();
+		  })
+		.on('error',function(res){
+			$('.alert').show()
+			$('.message').append("Unauthorised")
+		})();
         	}
 		else if($scope.github_password == "" )
 		{	localStorage["token"] =  ""
@@ -38,7 +42,10 @@ if(!localStorage["user"])
 			localStorage["user"] = ""
 			$location.path([''].join('/'));
 		}
-
+$scope.removemessage = function () {
+			$('.alert').hide();
+			$('.message').empty();
+		}
 
 }
 
