@@ -1,65 +1,63 @@
-
 <html lang="en" ng-app="reportingManagerApp" ng-csp>
-<head>
-  <meta charset="utf-8">
-  <title>Reporting Manager</title>
-<script src="js/superagent.min.js"></script>
-  <script src="js/octo.min.js"></script>
-  <link rel="stylesheet" href="css/app.css"/>
-  <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
-  <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-responsive.min.css"/>
-</head>
-<body ng-controller="UserCtrl">
-<div id="loading" style="display: none; "><img ng-src="img/loader.gif"></div>
-<div class="navbar">
-  <div class="navbar-inner">
-    <a class="brand" href="index.html">Reporting Manager</a>
+	<head>
+		<meta charset="utf-8">
+		<title>Reporting Manager</title>
+		<script src="js/superagent.min.js"></script>
+		<script src="js/octo.min.js"></script>
+		<link rel="stylesheet" href="css/app.css"/>
+		<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="lib/bootstrap/css/bootstrap-responsive.min.css"/>
+	</head>
+	<body ng-controller="UserCtrl">
 
-    <ul class="nav pull-right">
-      <li>
-        <a href="" ng-click="removeGithubUser()"><i class="icon-off"></i> Switch user</a>
-      </li>
-    </ul>
-  </div>
-</div>
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a class="brand" href="index.html">Reporting Manager</a>
 
-<div class="container" ng-view></div>
-<hr>
-<footer>
-  <div class="pagination-centered" style="padding-bottom: 25px;">
-    <h3>Rumble Rumble!</h3>
-    <a herf = 'http://railsrumble.com/entries/212-red-indians'> <img src = "img/rr-logo-small.png" ></a>
-  </div>
-  <div>
-    <ul class="breadcrumb pagination-centered">
-      <li>
-        
-            Meet the team
-        
-        <span class="divider">|</span>
-      </li>
-      <li>
-        
-            Github for Project Management
-        
-      </li>
-    </ul>
-  </div>
-</footer>
+				<ul class="nav pull-right">
+					<li>
+						<a href="" ng-click="removeGithubUser()"><i class="icon-off"></i> Switch user</a>
+					</li>
+				</ul>
+			</div>
+		</div>
 
+		<div class="container" ng-view></div>
+		<hr>
+		<footer>
+			<div class="pagination-centered" style="padding-bottom: 25px;">
+				<h3>Rumble Rumble!</h3>
+				<a herf = 'http://railsrumble.com/entries/212-red-indians'> <img src = "img/rr-logo-small.png" ></a>
+			</div>
+			<div>
+				<ul class="breadcrumb pagination-centered">
+					<li>
 
-<!-- In production use:
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
--->
-<script src="lib/angular/angular.min.js"></script>
-<script src="lib/angular/angular-resource.min.js"></script>
-<script src="lib/jquery.min.js"></script>
-<script src="lib/underscore-min.js"></script>
-<script src="lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="js/app.js"></script>
-<script src="js/services.js"></script>
-<script src="js/controllers.js"></script>
-<script src="js/filters.js"></script>
-<script src="js/directives.js"></script>
-</body>
+						Meet the team
+
+						<span class="divider">|</span>
+					</li>
+					<li>
+
+						Github for Project Management
+
+					</li>
+				</ul>
+			</div>
+		</footer>
+
+		<!-- In production use:
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+		-->
+		<script src="lib/angular/angular.min.js"></script>
+		<script src="lib/angular/angular-resource.min.js"></script>
+		<script src="lib/jquery.min.js"></script>
+		<script src="lib/underscore-min.js"></script>
+		<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/services.js"></script>
+		<script src="js/controllers.js"></script>
+		<script src="js/filters.js"></script>
+		<script src="js/directives.js"></script>
+	</body>
 </html>

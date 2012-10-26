@@ -1,134 +1,123 @@
 /* app css stylesheet */
 
 .menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+	list-style: none;
+	border-bottom: 0.1em solid black;
+	margin-bottom: 2em;
+	padding: 0 0 0.5em;
 }
 
 .menu:before {
-  content: "[";
+	content: "[";
 }
 
 .menu:after {
-  content: "]";
+	content: "]";
 }
 
 .menu > li {
-  display: inline;
+	display: inline;
 }
 
 .menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
+	content: "|";
+	padding-right: 0.3em;
 }
 
 .menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
+	content: "";
+	padding: 0;
 }
-#loading { 
-position: absolute; 
-left: 400px; 
-top: 300px; 
-display: none; 
-background: brown; 
-padding: 0.3em; 
-font-weight: bold; 
-}
-.container
-{
-
-margin-bottom: 7em;
+.container {
+	margin-bottom: 7em;
 }
 .collaborators-small {
-    width: 30px;
-    float: left;
-    margin-left: 2px;
-    margin-bottom: 5px;
+	width: 30px;
+	float: left;
+	margin-left: 2px;
+	margin-bottom: 5px;
 }
 
 .fav-unfav-pull-down {
-    margin-top: 30px;
+	margin-top: 30px;
 }
 
 ul.project-thumbnails {
-    margin-left: 0;
+	margin-left: 0;
 }
 
 div.project-thumbnail {
-    background-color: rosyBrown;
-    border-radius: 5px;
+	background-color: rosyBrown;
+	border-radius: 5px;
 }
 
 div.project-thumbnail .span2 a {
-    color: #690000;
+	color: #690000;
 }
 
 div.owner-pic {
-    width: 107px;
-    margin-top: 10px;
-    margin-bottom: 20px;
+	width: 107px;
+	margin-top: 10px;
+	margin-bottom: 20px;
 }
 
 div.collaborator-pics {
-    min-height: 134px;
-    margin-top: -4px;
+	min-height: 134px;
+	margin-top: -4px;
 }
 
 h3.project-title {
-    margin-top: 1px;
-    text-align: left;
+	margin-top: 1px;
+	text-align: left;
 }
 
 div.pull-down {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 div.span3 a {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 .credit-col {
-    width: 50%;
+	width: 50%;
 }
 
 .credit-pic {
-    float: left;
-    width: 20%;
-    list-style: none;
+	float: left;
+	width: 20%;
+	list-style: none;
 }
 
 .credit-desc {
-    float: left;
-    width: 70%;
-    list-style: none;
-    margin-left: 1em;
-    text-align: justify;
+	float: left;
+	width: 70%;
+	list-style: none;
+	margin-left: 1em;
+	text-align: justify;
 }
 
 /* Bootstrap style override */
 a.btn {
-    padding: 12px 10px;
+	padding: 12px 10px;
 }
 
 .display-pic {
-    border-color: white;
-    border-width: 1px;
-    border-style: solid;
-    vertical-align: top;
-    height: 20px;
-    width: 20px;
+	border-color: white;
+	border-width: 1px;
+	border-style: solid;
+	vertical-align: top;
+	height: 20px;
+	width: 20px;
 }
 
 .card {
-    background-color: rosyBrown;
+	background-color: rosyBrown;
 }
 
 .bar p {
-    color: white;
-    font-size: 12px;
-    text-align: center;
-    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
+	color: white;
+	font-size: 12px;
+	text-align: center;
+	text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
 }
