@@ -1,88 +1,78 @@
-<div class="row-fluid">
-  <div class="span2" ng-controller="ProjectCtrl">
-    <h4>Projects</h4>
+<div class="row" ng-controller="ProjectCtrl">
 
-    <input type="text" ng-model="searchProject" class="search-query span12" placeholder="Search">
-    <ul id="projects" class="nav nav-pills nav-stacked">
-      <li ng-class="getClass(project.name)" ng-click="onSelect(project.owner.login,project.name)"
-          ng-repeat="project in projects | filter:searchProject" >
-        <a>{{project.name}}</a>
-      </li>
-    </ul>
-  </div>
-  <div class="span10">
-    <div ng-hide="true" class="btn-toolbar">
+	<ul class="thumbnails project-thumbnails" id='fav'>
+		<h1>Favorite Projects</h1>
+		<hr/>
+		<li ng-repeat="proj in projects" class="span4 pagination-centered" ng-class = "getClass(proj.id)">
+			<div class="thumbnail project-thumbnail">
 
-      <div class="btn-group" data-toggle="buttons-radio">
-        <button type="button" class="btn">Day</button>
-        <button type="button" class="btn active">Week</button>
-        <button type="button" class="btn">Month</button>
-      </div>
+				<div class='span2 owner-pic'><img src = "{{proj.owner.avatar_url}}" class = "img-rounded" style = 'width:100px' alt = 'Owner' />
+				</div>
+				<div ng-init="person = getdata(proj);" class = "span2 collaborator-pics" >
+					<h3 class='project-title'><a>{{proj.name}}</a></h3>
+					{{getdataofdata(person,proj.name)}}
+					<div ng-class="getId(proj.name)" data-count ="false">
 
-      <div class="btn-group">
-        <a href="http://stackoverflow.com/questions/4912092/using-html5-canvas-javascript-to-take-screenshots/6678156#6678156"
-           target="_blank" class="btn">Save Report <i class="icon-download"></i></a>
-      </div>
-    </div>
-    <div ng-hide="milestones == null" id="report" ng-controller="MilestoneCtrl">
-      <div>
-        <h4 class="pagination-centered">Project Health</h4>
+					</div>
+				</div>
+				<div class='span3 pagination-centered' ng-controller="MilestoneCtrl">
+					<div class="progress progress-success  active" id='project-data' ng-init = "milestones = fetchmilestone(proj) ">
+						<a href='javascript:;' ng-click="onSelect(proj.owner.login,proj.name)">
+						<div class="bar" id='bar-<%= project[:id] %>' style="width: {{health(milestones)}}%;">
+							<p>
+								{{health(milestones)}}%
+							</p>
+						</div></a>
+					</div>
+				</div>
+				<br/>
 
-        <div class="progress progress-success">
-          <div class="bar" style="width: {{health()}}%;"></div>
-        </div>
-      </div>
-      <div class="row-fluid">
-        <div class="span3">
-          <h4 class="pagination-centered">Milestones</h4>
-          <ul id="milestones" class="container-fluid nav nav-tabs nav-stacked">
-            <li ng-class="getClass(milestone.id)" ng-repeat="milestone in milestones" ng-click="onSelect()">
-              <a>
-                {{milestone.title}}<br/><span class="muted">{{dueOn(milestone)}}</span>
+				<div>
 
-                <div class="progress progress-success">
-                  <div class="bar"
-                       style="width: {{percentCompletion(milestone) + '%'}}"></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div ng-hide="issues == null" class="span9" ng-controller="TaskCtrl">
-          <h4 class="pagination-centered">Tasks</h4>
+					<a href='javascript:;' ng-click="onSelect(proj.owner.login,proj.name)" class='btn btn-warning' id='mil_{{proj.id}}' >Milestones</a>
+					<a href='javascript:;' class='btn unfav' data-id='{{proj.id}}'><i class='icon-eye-close'></i>Not
+					Favorite</a>
+				</div>
+			</div>
+		</li>
+	</ul>
 
-          <div class="well">
-            <table id="tasks" class="table table-striped">
-              <thead>
-              <tr>
-                <td><strong>Name</strong></td>
-                <td><strong>Labels</strong></td>
-                <td><strong>Assigned to</strong></td>
-              </tr>
-              </thead>
-              <tbody>
-              <tr ng-repeat="issue in issues">
-                <td><a href="{{issue.html_url}}" target="_blank" title="View in Github">{{issue.title}}</a></td>
-                <td>
-                  <ul class="unstyled">
-                    <li ng-repeat="label in issue.labels">
-                      <span class="label" style="background-color: #{{label.color}}">{{label.name}}</span>&nbsp;
-                    </li>
-                  </ul>
-                </td>
-                <td>
-                  <img
-                      ng-src="{{issue.assignee.avatar_url}}"
-                      style="width:30px" title="{{issue.assignee.login}}">
-                  &nbsp;
-                  <span></span>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+	<ul class="thumbnails project-thumbnails" id='unfav'>
+		<h1>Other Projects</h1>
+		<hr/>
+		<li ng-repeat="proj in projects" class="span4 pagination-centered"  ng-class = "getClass(proj.id)">
+			<div class="thumbnail project-thumbnail">
+
+				<div class='span2 owner-pic'><img src = "{{proj.owner.avatar_url}}" class = "img-rounded" style = 'width:100px' alt = 'Owner' />
+				</div>
+				<div ng-init="person = getdata(proj);" class = "span2 collaborator-pics" >
+					<h3 class='project-title'><a>{{proj.name}}</a></h3>
+					{{getdataofdata(person,proj.name)}}
+					<div ng-class="getId(proj.name)" data-count ="false">
+
+					</div>
+				</div>
+				<div class='span3 pagination-centered' ng-controller="MilestoneCtrl">
+					<div class="progress progress-success  active" id='project-data' ng-init = "milestones = fetchmilestone(proj) ">
+						<a href='javascript:;' ng-click="onSelect(proj.owner.login,proj.name)">
+						<div class="bar" id='bar-<%= project[:id] %>' style="width: {{health(milestones)}}%;">
+							<p>
+								{{health(milestones,proj.id)}}%
+							</p>
+						</div></a>
+					</div>
+				</div>
+				<br/>
+
+				<div>
+
+					<a href='javascript:;' class='btn btn-warning'  ng-click="onSelect(proj.owner.login,proj.name)" id='mil_{{proj.id}}' >Milestones</a>
+					<a href='javascript:;' class='btn fav' data-id='{{proj.id}}'><i class='icon-eye-open'></i> Favorite</a>
+				</div>
+			</div>
+		</li>
+	</ul>
+
+	{{cleardata()}}
+</div >
+

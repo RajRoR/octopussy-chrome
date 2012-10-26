@@ -1,0 +1,38 @@
+<ul class="breadcrumb">
+  <li><a href='javascript:;' ng-click="onselectproject()">Projects</a> <span class="divider">/</span></li>
+  <li class="active">Milestones</li>
+</ul>
+<div class="well">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <td><h2>Name</h2></td>
+      <td><h2>Due On</h2></td>
+      <td class="span1"><h2>Creator</h2></td>
+      <td class="span4"><h2>Health</h2></td>
+      <td><h2>Actions</h2></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="center" ng-repeat="milestone in milestones">
+  <td style="vertical-align: middle;">
+    <h3>{{milestone.title}}</h3>
+  </td>
+  <td style="vertical-align: middle;">
+    <h3>{{dueOn(milestone)}}</h3>
+  </td>
+  <td class="span3" style="vertical-align: middle;">
+    <img alt="Assets.github.com%2fimages%2fgravatars%2fgravatar-user-420" height="50" src="https://secure.gravatar.com/avatar/f46c9b231319144f74be8e5d6a27016a?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" title="mahinder" width="50">
+  </td>
+  <td style="vertical-align: middle;">
+    <div class="progress pull-down" title="1 out of 2 issues are open">
+      <div class="bar" style="width: {{percentCompletion(milestone) + '%'}} ; background-color:#2a6023;"></div>
+    </div>
+  </td>
+  <td style="vertical-align: middle;">
+    <a href="javascript:;" ng-click="onSelectmile()" class="btn btn-primary">Show Tasks</a>
+  </td>
+</tr>
+    </tbody>
+  </table>
+</div>

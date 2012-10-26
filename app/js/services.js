@@ -1,4 +1,4 @@
-'use strict';
+
 
 /* Services */
 
@@ -16,6 +16,10 @@ angular.module('Github', ['ngResource']).
 	factory('GithubRepo2', function ($resource) {
 	var project = $resource('https://api.github.com/users/:user/repos');
         return project;
+    }).
+    factory('GithubRepo3', function ($resource) {
+	var collaborators = $resource('https://api.github.com/repos/:user/:repo/collaborators');
+	return collaborators;
     }).
     factory('GithubMilestone', function ($resource) {
         var milestones = $resource('https://api.github.com/repos/:user/:repo/milestones?access_token=:access_token');

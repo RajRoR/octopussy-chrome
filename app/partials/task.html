@@ -1,0 +1,39 @@
+<ul class="breadcrumb">
+	<li>
+		<a href='javascript:;' ng-click="onselectproject()">Projects</a><span class="divider">/</span>
+	</li>
+	<li>
+		<a href='javascript:;' ng-click="onselectmilestone()">Milestones</a>
+		<span class="divider">/</span>
+	</li>
+	<li class="active">
+		Tasks
+	</li>
+</ul>
+<div class="well" ng-controller="TaskCtrl">
+	<table id="tasks" class="table table-striped">
+		<thead>
+			<tr>
+				<td><h2>Name</h2></td><td><h2>Labels</h2></td>
+				<td><h2>Assigned to</h2></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="issue in issues">
+				<td style="vertical-align: middle;"><h3><a href="{{issue.html_url}}" target="_blank" title="View in Github">{{issue.title}}</a></h3></td>
+				<td style="vertical-align: middle;">
+				<ul class="unstyled">
+					<li ng-repeat="label in issue.labels">
+						<span class="label" style="background-color: #{{label.color}}">{{label.name}}</span>&nbsp;
+					</li>
+				</ul></td>
+				<td style="vertical-align: middle;"><img
+                      ng-src="{{issue.assignee.avatar_url}}"
+                      style="width:30px" title="{{issue.assignee.login}}">
+                  &nbsp;
+                  <span></span>
+</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
