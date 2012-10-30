@@ -7,7 +7,7 @@ angular.module('reportingManagerApp', ['reportingManagerApp.filters', 'reporting
     $routeProvider.when('/', {templateUrl:'partials/login.html', controller:UserCtrl})
     $routeProvider.when('/github/:user', {templateUrl:'partials/dashboard.html', controller:ProjectCtrl});
     $routeProvider.when('/github/:user/:repo', {templateUrl:'partials/miles.html', controller:MilestoneCtrl});
-    //$routeProvider.when('/github/:user/:repo/:milestone', {templateUrl:'partials/dashboard.html', controller:TaskCtrl});
+    $routeProvider.when('/github_team', {templateUrl:'partials/credits.html'});
      $routeProvider.when('/github/:user/:repo/:milestone', {templateUrl:'partials/task.html', controller:TaskCtrl});
 
     $routeProvider.otherwise({redirectTo:'/'});

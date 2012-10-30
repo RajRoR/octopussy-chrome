@@ -56,8 +56,19 @@
 			$scope.getUser= function (){
 				return localStorage["user"]		
 			}
-
-
+			$scope.onSelectTeam = function (){
+				$location.path(['', 'github_team'].join('/'));			
+			}
+			$scope.trim = function (name){
+				if(name.length > 10)
+				{
+					return	name.substring(0,10) + "...";		
+				}
+				else
+				{
+					return name
+				}
+			}
 	}
 
 	angular.module('project', ['Github']);

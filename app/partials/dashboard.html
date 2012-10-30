@@ -8,7 +8,7 @@
 				<div class='span2 owner-pic'><img src = "{{proj.owner.avatar_url}}" class = "img-rounded" style = 'width:100px' alt = 'Owner' />
 				</div>
 				<div ng-init="person = getdata(proj);" class = "span2 collaborator-pics" >
-					<h3 class='project-title'><a>{{proj.name}}</a></h3>
+					<h3 class='project-title'><a>{{trim(proj.name)}}</a></h3>
 					{{getdataofdata(person,proj.name)}}
 					<div ng-class="getId(proj.name)" data-count ="false">
 
@@ -45,7 +45,7 @@
 				<div class='span2 owner-pic'><img src = "{{proj.owner.avatar_url}}" class = "img-rounded" style = 'width:100px' alt = 'Owner' />
 				</div>
 				<div ng-init="person = getdata(proj);" class = "span2 collaborator-pics" >
-					<h3 class='project-title'><a>{{proj.name}}</a></h3>
+					<h3 class='project-title'><a>{{trim(proj.name)}}</a></h3>
 					{{getdataofdata(person,proj.name)}}
 					<div ng-class="getId(proj.name)" data-count ="false">
 
