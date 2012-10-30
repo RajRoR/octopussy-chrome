@@ -93,11 +93,7 @@
 		}
 	var counts = 0 
 	$scope.projectcall = function(project) {
-		alert(project)
-		counts = counts + 1
-		$('h1').html(counts)
-			alert(projects)
-			
+		
 		}
 	
 		$scope.onSelect = function(owner, name) {
