@@ -16,6 +16,7 @@
 			<div class="navbar-inner">
 				<a class="brand" href="index.html">Octo Pussy</a>
 
+
 				<ul class="nav pull-right" ng-switch on="checkUser()">
 					<li class="dropdown"  ng-switch-when="no">
 						<a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
@@ -29,7 +30,7 @@
 									<div class="clearfix">
 										<input ng-model="password" type="password" name="github_password" placeholder="Github password (optional)" title="We need your password to access your private repositories. We don't save the password. Instead we would exchange it with a secure token from Github and would use it for accessing your private information. This gives you the power to revoke access to our application from your Github settings.">
 									</div></br>
-									<button type="submit" class="btn">
+									<button type="submit" class="btn btn-info" style = "border-radius: 10px 10px 10px 10px;">
 										Fetch Projects
 									</button>
 								</fieldset>
@@ -40,9 +41,13 @@
 					
 					<li ng-switch-when="yes" class="dropdown" ng-init = "login = getUser()">
 						<a class="dropdown-toggle" href="#" data-toggle="dropdown">Login by : {{login}} <strong class="caret"></strong></a>
-						<div class="dropdown-menu " style="padding: 2px; padding-bottom: 38px; height: 18px; background-color: #AD1D28; "  >
-							<a href="https://github.com/{{login}}" style="color: white;"><i class="icon-off"></i> Open Github </a>
+						<div class="dropdown-menu " style="padding: 2px; padding-bottom: 68px; height: 18px; background-color: #AD1D28; "  >
+							
 							<a href="" ng-click="removeGithubUser()" style="color: white;"><i class="icon-off"></i> Switch user</a>
+<a href="index.html" style="color: white;"><i class="icon-off"></i> Dashboard</a>
+<a href="https://github.com/{{login}}" style="color: white;"><i class="icon-off"></i> Open Github </a>
+
+
 						</div>
 						
 					</li>

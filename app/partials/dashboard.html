@@ -2,8 +2,9 @@
 	<ul class="thumbnails project-thumbnails" id='fav'>
 		<h1>Favorite Projects</h1>
 		<hr/>
-		<li ng-repeat="proj in projects" class="span4 pagination-centered" ng-class = "getClass(proj.id)">
-			<div class="thumbnail project-thumbnail">
+		<li ng-repeat="proj in projects" class="span4 pagination-centered" ng-class = "getClass(proj.id)" ng-init = "include = favorite(proj.id)" ng-switch on="include" ng-show = "include" id = "fav_{{proj.id}}">
+			
+			<div class="thumbnail project-thumbnail" ng-switch-when="true">
 
 				<div class='span2 owner-pic'><img src = "{{proj.owner.avatar_url}}" class = "img-rounded" style = 'width:100px' alt = 'Owner' />
 				</div>
@@ -39,7 +40,7 @@
 	<ul class="thumbnails project-thumbnails" id='unfav'>
 		<h1>Other Projects</h1>
 		<hr/>
-		<li ng-repeat="proj in projects" class="span4 pagination-centered"  ng-class = "getClass(proj.id)">
+		<li ng-repeat="proj in projects" class="span4 pagination-centered"  ng-class = "getClass(proj.id)" ng-init = "include = favorite(proj.id)" ng-switch on="include" ng-hide = "include" id = "unfav_{{proj.id}}">
 			<div class="thumbnail project-thumbnail">
 
 				<div class='span2 owner-pic'><img src = "{{proj.owner.avatar_url}}" class = "img-rounded" style = 'width:100px' alt = 'Owner' />
@@ -72,6 +73,6 @@
 		</li>
 	</ul>
 
-	{{cleardata()}}
+	
 </div >
 

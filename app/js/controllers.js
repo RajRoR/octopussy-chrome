@@ -3,6 +3,11 @@
 /* Controllers */
 
 	function UserCtrl($scope, $location,GithubRepo) {
+		if (localStorage["user"]) {
+			$location.path(['', 'github', 'user', ].join('/'));
+
+		 }
+
 		$scope.saveGithubUser = function () {
 			$scope.github_username = document.login.github_username.value;
 			$scope.github_password = document.login.github_password.value;
@@ -40,9 +45,14 @@
 				$('.message').empty();
 			}
 
-			$scope.cleardata= function (){
-				$('#fav .Unfavorite').remove();
-				$('#unfav .Favorite').remove();
+			$scope.favorite= function (id){
+				if(localStorage[id])
+				{
+					return true
+				}else
+				{
+					return false
+				}
 			}	
 			$scope.checkUser= function (){
 				if (localStorage["user"]) {
@@ -250,11 +260,17 @@
 
 		$(document).on('click','.fav',function(){
 			localStorage[$(this).attr('data-id')] = "fav";
-			window.location.reload();
+			var data = $('#unfav_'+$(this).attr('data-id')).html()
+			$('#unfav_'+$(this).attr('data-id')).empty()
+			$('#unfav_'+$(this).attr('data-id')).hide()
+			$('#fav_'+$(this).attr('data-id')).html(data)
 		})
 		$(document).on('click','.unfav',function(){
 			localStorage.removeItem($(this).attr('data-id'));
-			window.location.reload();
+			var data = $('#fav_'+$(this).attr('data-id')).html()
+			$('#fav_'+$(this).attr('data-id')).empty()
+			$('#fav_'+$(this).attr('data-id')).hide()
+			$('#unfav_'+$(this).attr('data-id')).html(data)
 		})
 			
 
