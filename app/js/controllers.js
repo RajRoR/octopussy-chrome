@@ -18,6 +18,8 @@
 					  .on('success', function(res){
 						localStorage["token"] =  res.body.token;
 						localStorage["user"] =  $scope.github_username;
+						$('#myModal').modal('hide')
+						$('#myModal input').val("")
 						$location.path(['', 'github', $scope.github_username, ].join('/'));
 						$scope.$apply();
 					  })
@@ -39,7 +41,10 @@
 				localStorage["user"] = "";
 				$location.path([''].join('/'));
 			}
-			
+			$scope.hidelis = function () {
+				$('#fav .Unfavorite').hide()
+				$('#unfav .Favorite').hide()
+			}
 			$scope.removemessage = function () {
 				$('.alert').hide();
 				$('.message').empty();
@@ -54,6 +59,9 @@
 					return false
 				}
 			}	
+				
+			
+			
 			$scope.checkUser= function (){
 				if (localStorage["user"]) {
 					return "yes"
@@ -258,19 +266,33 @@
 		}
 	}
 
-		$(document).on('click','.fav',function(){
+		$(document).on('click','.fav',function(event){
+			event.preventDefault();
 			localStorage[$(this).attr('data-id')] = "fav";
+			$(this)
+			.html('<i class="icon-eye-close"></i>  Not Favorite')
+			.removeClass('fav')
+			.addClass('unfav')
 			var data = $('#unfav_'+$(this).attr('data-id')).html()
 			$('#unfav_'+$(this).attr('data-id')).empty()
 			$('#unfav_'+$(this).attr('data-id')).hide()
+			$('#fav_'+$(this).attr('data-id')).show()
 			$('#fav_'+$(this).attr('data-id')).html(data)
 		})
-		$(document).on('click','.unfav',function(){
+		$(document).on('click','.unfav',function(event){
+			event.preventDefault();
 			localStorage.removeItem($(this).attr('data-id'));
+			$(this)
+			.html('<i class="icon-eye-open"></i>  Favorite')
+			.removeClass('unfav')
+			.addClass('fav')
 			var data = $('#fav_'+$(this).attr('data-id')).html()
 			$('#fav_'+$(this).attr('data-id')).empty()
 			$('#fav_'+$(this).attr('data-id')).hide()
+			$('#unfav_'+$(this).attr('data-id')).show()
 			$('#unfav_'+$(this).attr('data-id')).html(data)
-		})
 			
+		})
+				
+		
 

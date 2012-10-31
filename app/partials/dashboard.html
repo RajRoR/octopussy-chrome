@@ -2,7 +2,7 @@
 	<ul class="thumbnails project-thumbnails" id='fav'>
 		<h1>Favorite Projects</h1>
 		<hr/>
-		<li ng-repeat="proj in projects" class="span4 pagination-centered" ng-class = "getClass(proj.id)" ng-init = "include = favorite(proj.id)" ng-switch on="include" ng-show = "include" id = "fav_{{proj.id}}">
+		<li ng-repeat="proj in projects" class="span4 pagination-centered" ng-class = "getClass(proj.id)" ng-init = "include = favorite(proj.id)" ng-switch on="include"  id = "fav_{{proj.id}}">
 			
 			<div class="thumbnail project-thumbnail" ng-switch-when="true">
 
@@ -30,7 +30,7 @@
 				<div>
 
 					<a href='javascript:;' ng-click="onSelect(proj.owner.login,proj.name)" class='btn btn-warning' id='mil_{{proj.id}}' >Milestones</a>
-					<a href='javascript:;' class='btn unfav' data-id='{{proj.id}}'><i class='icon-eye-close'></i>Not
+					<a href='' class='btn unfav' data-id='{{proj.id}}'><i class='icon-eye-close'></i>Not
 					Favorite</a>
 				</div>
 			</div>
@@ -40,7 +40,7 @@
 	<ul class="thumbnails project-thumbnails" id='unfav'>
 		<h1>Other Projects</h1>
 		<hr/>
-		<li ng-repeat="proj in projects" class="span4 pagination-centered"  ng-class = "getClass(proj.id)" ng-init = "include = favorite(proj.id)" ng-switch on="include" ng-hide = "include" id = "unfav_{{proj.id}}">
+		<li ng-repeat="proj in projects" class="span4 pagination-centered"  ng-class = "getClass(proj.id)" ng-init = "include = favorite(proj.id)" ng-switch on="include"  id = "unfav_{{proj.id}}">
 			<div class="thumbnail project-thumbnail">
 
 				<div class='span2 owner-pic'><img src = "{{proj.owner.avatar_url}}" class = "img-rounded" style = 'width:100px' alt = 'Owner' />
@@ -67,12 +67,12 @@
 				<div>
 
 					<a href='javascript:;' class='btn btn-warning'  ng-click="onSelect(proj.owner.login,proj.name)" id='mil_{{proj.id}}' >Milestones</a>
-					<a href='javascript:;' class='btn fav' data-id='{{proj.id}}'><i class='icon-eye-open'></i> Favorite</a>
+					<a href='' class='btn fav' data-id='{{proj.id}}'><i class='icon-eye-open'></i> Favorite</a>
 				</div>
 			</div>
 		</li>
 	</ul>
 
-	
+	{{hidelis()}}
 </div >
 
