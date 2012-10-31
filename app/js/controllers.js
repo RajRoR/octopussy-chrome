@@ -91,11 +91,14 @@
 
 	angular.module('project', ['Github']);
 
-
+var counts = 0
 	function ProjectCtrl($scope, $location, $routeParams, GithubRepo, GithubRepo2, GithubRepo3) {
 	
 		$scope.data = null
-	
+	$scope.datacall= function(){
+		counts = counts + 1
+		$('h1').text(counts)
+	}
 		if (!localStorage["user"]) {
 			$location.path([''].join('/'));
 		}
