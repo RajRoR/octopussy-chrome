@@ -1,7 +1,7 @@
 <html lang="en" ng-app="reportingManagerApp" ng-csp>
 	<head>
 		<meta charset="utf-8">
-		<title>Reporting Manager</title>
+		<title>OctoPussy</title>
 		<script src="js/superagent.min.js"></script>
 		<script src="js/octo.min.js"></script>
 		<link rel="stylesheet" href="css/app.css"/>
@@ -14,43 +14,83 @@
 
 		<div class="navbar">
 			<div class="navbar-inner">
-				<a class="brand" href="index.html">Octo Pussy</a>
-
+				<a class="brand" href="index.html"><img alt="Octopussy-logo-white-26x23" src="img/octopussy-logo-white-26x23.png" style="vertical-align:top">&nbsp;OctoPussy</a>
 
 				<ul class="nav pull-right" ng-switch on="checkUser()">
-					<li class="dropdown"  ng-switch-when="no">
-						<a class="dropdown-toggle" href="#" data-toggle="dropdown">Sign In <strong class="caret"></strong></a>
-						<div class="dropdown-menu navbar-inner" style="padding: 15px; padding-bottom: 0px;" >
-							<h2>Login</h2>
+
+					<li>
+						<a href="index.html">Home</a>
+
+					</li>
+
+					<li class="dropdown"  ng-switch-when="no" id="login">
+
+						<a href="#myModal" data-toggle="modal">Login with Github</a>
+						<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+									×
+								</button>
+								<h3 id="myModalLabel">Login</h3>
+							</div>
 							<form class="form-horizontal" ng-submit="saveGithubUser()" name = "login">
-								<fieldset>
-									<div class="clearfix">
-										<input ng-model="github_username" type="text" name="github_username" placeholder="Github user name" title="Add your Github user name here to get information about your projects" required>
-									</div></br>
-									<div class="clearfix">
-										<input ng-model="password" type="password" name="github_password" placeholder="Github password (optional)" title="We need your password to access your private repositories. We don't save the password. Instead we would exchange it with a secure token from Github and would use it for accessing your private information. This gives you the power to revoke access to our application from your Github settings.">
-									</div></br>
-									<button type="submit" class="btn btn-info" style = "border-radius: 10px 10px 10px 10px;">
+								<div class="modal-body">
+									<table width="100%">
+										<tr style="
+										height: 16px;
+										">
+											<td></td><td></td>
+										</tr>
+										<tr>
+											<td >User Name</td>
+											<td align="center">
+											<input ng-model="github_username" type="text" name="github_username" placeholder="Github user name" title="Add your Github user name here to get information about your projects" required>
+											</td>
+										</tr>
+										<tr style="
+										height: 16px;
+										">
+											<td></td><td></td>
+										</tr>
+										<tr>
+											<td>Password</td>
+											<td align="center">
+											<input ng-model="password" type="password" name="github_password" placeholder="Github password (optional)" title="We need your password to access your private repositories. We don't save the password. Instead we would exchange it with a secure token from Github and would use it for accessing your private information. This gives you the power to revoke access to our application from your Github settings.">
+											</td>
+										</tr>
+										<tr style="
+										height: 16px;
+										">
+											<td></td><td></td>
+										</tr>
+									</table>
+								</div>
+								<div class="modal-footer">
+									<button class="btn btn-primary"style = "border-radius: 10px 10px 10px 10px;" type="submit">
 										Fetch Projects
 									</button>
-								</fieldset>
+									<button class="btn btn-primary" data-dismiss="modal" style = "border-radius: 10px 10px 10px 10px;" aria-hidden="true">
+										Close
+									</button>
+									
+								</div>
 							</form>
 						</div>
-					</li>
-					
-					
-					<li ng-switch-when="yes" class="dropdown" ng-init = "login = getUser()">
-						<a class="dropdown-toggle" href="#" data-toggle="dropdown">Login by : {{login}} <strong class="caret"></strong></a>
-						<div class="dropdown-menu " style="padding: 2px; padding-bottom: 68px; height: 18px; background-color: #AD1D28; "  >
-							
-							<a href="" ng-click="removeGithubUser()" style="color: white;"><i class="icon-off"></i> Switch user</a>
-<a href="index.html" style="color: white;"><i class="icon-off"></i> Dashboard</a>
-<a href="https://github.com/{{login}}" style="color: white;"><i class="icon-off"></i> Open Github </a>
 
+					</li>
+
+					<li ng-switch-when="yes" class="dropdown" ng-init = "login = getUser()">
+						<a class="dropdown-toggle" href="#" data-toggle="dropdown">{{login}} <strong class="caret"></strong></a>
+						<div class="dropdown-menu " style="padding: 2px; padding-bottom: 68px; height: 18px; background-color: #AD1D28; "  >
+
+							<a href="" ng-click="removeGithubUser()" style="color: white;"><i class="icon-off"></i> Switch user</a>
+							<a href="index.html" style="color: white;"><i class="icon-off"></i> Dashboard</a>
+							<a href="https://github.com/{{login}}" style="color: white;" target="_blank"><i class="icon-off"></i> Open Github </a>
 
 						</div>
-						
+
 					</li>
+
 				</ul>
 			</div>
 		</div>
@@ -60,11 +100,11 @@
 				<ul class="breadcrumb pagination-centered">
 					<li>
 						<a href="javascript:;" style="color: white;" ng-click="onSelectTeam()">Meet the team</a>
-						
+
 						<span class="divider">|</span>
 					</li>
 					<li>
-						<a href="http://www.smashingboxes.com/using-github-issues-to-manage-projects/" style="color: white;">Github for Project Management</a>
+						<a href="http://www.smashingboxes.com/using-github-issues-to-manage-projects/" target="_blank" style="color: white;">Github for Project Management</a>
 					</li>
 				</ul>
 			</div>

@@ -3,12 +3,14 @@
 /* Controllers */
 
 	function UserCtrl($scope, $location,GithubRepo) {
+		
 		if (localStorage["user"]) {
 			$location.path(['', 'github', 'user', ].join('/'));
 
 		 }
 
 		$scope.saveGithubUser = function () {
+			
 			$scope.github_username = document.login.github_username.value;
 			$scope.github_password = document.login.github_password.value;
 			if($scope.github_username && $scope.github_password) 
@@ -18,6 +20,8 @@
 					  .on('success', function(res){
 						localStorage["token"] =  res.body.token;
 						localStorage["user"] =  $scope.github_username;
+						$('#myModal').modal('hide')
+						$('#myModal input').val("")
 						$location.path(['', 'github', $scope.github_username, ].join('/'));
 						$scope.$apply();
 					  })
@@ -34,12 +38,13 @@
 			}
 
 			$scope.removeGithubUser = function () {
-				localStorage["owner"]="";
-				localStorage["name"]=""	;
-				localStorage["user"] = "";
+				localStorage.clear();
 				$location.path([''].join('/'));
 			}
-			
+			$scope.hidelis = function () {
+				$('#fav .Unfavorite').hide()
+				$('#unfav .Favorite').hide()
+			}
 			$scope.removemessage = function () {
 				$('.alert').hide();
 				$('.message').empty();
@@ -54,6 +59,7 @@
 					return false
 				}
 			}	
+				
 			$scope.checkUser= function (){
 				if (localStorage["user"]) {
 					return "yes"
@@ -83,7 +89,6 @@
 
 	angular.module('project', ['Github']);
 
-
 	function ProjectCtrl($scope, $location, $routeParams, GithubRepo, GithubRepo2, GithubRepo3) {
 	
 		$scope.data = null
@@ -91,32 +96,44 @@
 		if (!localStorage["user"]) {
 			$location.path([''].join('/'));
 		}
-	
+		var projects = JSON.parse( localStorage.getItem( 'repos' ) )
+			if(projects)
+			{
+				$scope.projects = projects
+			}
+			else
+			{
 		if (localStorage["token"]) {
 			$scope.projects = GithubRepo.query({
 				access_token : localStorage["token"]
 			});
+			
 		} else {
 			$scope.projects = GithubRepo2.query({
 				user : $routeParams.user
 			});
 		}
-	var counts = 0 
-	$scope.projectcall = function(project) {
-		
 		}
-	
 		$scope.onSelect = function(owner, name) {
 			localStorage["owner"] = owner;
 			localStorage["name"] = name;
 			$location.path(['', 'github', $routeParams.user, name, ''].join('/'));
 		}
 		$scope.getdata = function(project) {
+			var collab = JSON.parse( localStorage.getItem(project.name+"/coll") )
+			if(collab)
+			{
+				$scope.callobrator = collab
+				return $scope.callobrator;
+			}
+			else
+			{	
 			$scope.callobrator = GithubRepo3.query({
 				user : project.owner.login,
 				repo : project.name
 			})
 			return $scope.callobrator;
+			}
 		}
 	
 		$scope.getId = function(name) {
@@ -124,12 +141,18 @@
 		}
 	
 		$scope.getdataofdata = function(project, name) {
+			
+			alert(name)
+			if(localStorage["user"] && project) 	
+			{
+			localStorage[name+"/coll"] = JSON.stringify(project);
+			}
 			$scope.data = ""
 			var count = $('.' + name).attr('data-count')
 			$('.' + name).empty()
 			_.each(project, function(data) {
-					$('.' + name).attr('data-count', "true");
-					$('.' + name).append("<img src = '" + data.avatar_url + "' title ='" + data.login + "'  class = 'collaborators-small img-rounded'  alt = 'Collaborator'/>");
+				$('.' + name).attr('data-count', "true");
+				$('.' + name).append("<img src = '" + data.avatar_url + "' title ='" + data.login + "'  class = 'collaborators-small img-rounded'  alt = 'Collaborator'/>");
 				});
 			return $scope.data;
 		}
@@ -141,6 +164,16 @@
 				return "Unfavorite";
 			}
 		}
+		$scope.setProjects = function(project) {
+		
+			if(localStorage["user"] && project) 
+			{ 
+			localStorage.setItem( 'repos', JSON.stringify(project) );
+			}
+	
+		}
+		
+		
 	}
 
 
@@ -152,6 +185,12 @@
 		if (localStorage["name"]) {
 			var user = localStorage["owner"];
 			var name = localStorage["name"];
+		var millstones = JSON.parse( localStorage.getItem(name+"/mill" ) );
+			if(millstones) 
+			{
+				$scope.milestones = millstones
+			}
+			else{
 			if (localStorage["token"]) {
 				$scope.milestones = GithubMilestone.query({
 					access_token : localStorage["token"],
@@ -164,11 +203,20 @@
 					repo : name
 				})
 			}
+		}
 		} else {
 			$scope.milestones = [];
 		}
 	
 		$scope.fetchmilestone = function(project) {
+			alert(project)	
+			var millstones = JSON.parse( localStorage.getItem(name+"/mill" ) );
+			if(millstones) 
+			{
+				$scope.milestones = millstones;
+				return $scope.milestones;
+			}
+			else{
 			if (localStorage["token"]) {
 				$scope.milestones = GithubMilestone.query({
 					access_token : localStorage["token"],
@@ -183,6 +231,7 @@
 				})
 				return $scope.milestones;
 			}
+		}
 		}
 	
 		$scope.onselectproject = function() {
@@ -210,7 +259,11 @@
 			return milestone.closed_issues / (milestone.closed_issues + milestone.open_issues) * 100;
 		}
 	
-		$scope.health = function(milestones, id) {
+		$scope.health = function(milestones, id,name) {
+			if(localStorage["user"] && milestones)  	
+			{
+			localStorage[name+"/mill"] = JSON.stringify(milestones);
+			}
 			var openIssues = 0;
 			var closedIssues = 0;
 			var index = 0
@@ -256,21 +309,39 @@
 		}
 			// $scope.issues = GithubIssue.query({user:$routeParams.user, repo:$routeParams.repo, milestone:$routeParams.milestone})
 		}
+		$scope.settask = function(issue){
+			alert(issue)
+		}
+		
+		
 	}
 
-		$(document).on('click','.fav',function(){
+		$(document).on('click','.fav',function(event){
+			event.preventDefault();
 			localStorage[$(this).attr('data-id')] = "fav";
+			$(this)
+			.html('<i class="icon-eye-close"></i>  Not Favorite')
+			.removeClass('fav')
+			.addClass('unfav')
 			var data = $('#unfav_'+$(this).attr('data-id')).html()
 			$('#unfav_'+$(this).attr('data-id')).empty()
 			$('#unfav_'+$(this).attr('data-id')).hide()
-			
-		})
-		$(document).on('click','.unfav',function(){
+			$('#fav_'+$(this).attr('data-id')).show()
+			$('#fav_'+$(this).attr('data-id')).html(data)
+	})
+		$(document).on('click','.unfav',function(event){
+			event.preventDefault();
 			localStorage.removeItem($(this).attr('data-id'));
+			$(this)
+			.html('<i class="icon-eye-open"></i>  Favorite')
+			.removeClass('unfav')
+			.addClass('fav')
 			var data = $('#fav_'+$(this).attr('data-id')).html()
 			$('#fav_'+$(this).attr('data-id')).empty()
 			$('#fav_'+$(this).attr('data-id')).hide()
-			
+		$('#unfav_'+$(this).attr('data-id')).show()
+			$('#unfav_'+$(this).attr('data-id')).html(data)
 		})
-			
+				
+		
 
