@@ -1,15 +1,15 @@
 
 
-<div class="row" ng-controller="ProjectCtrl">
-	
-	<ul class="thumbnails project-thumbnails" id='fav'>
+<div class="row" ng-controller="ProjectCtrl" >
+
+	<ul class="thumbnails project-thumbnails" id='fav' >
 		<h1>Favorite Projects</h1>
 		<hr/>
 		<li ng-repeat="proj in projects" class="span4 pagination-centered" ng-class = "getClass(proj.id)" ng-init = "include = favorite(proj.id)" ng-switch on="include"  id = "fav_{{proj.id}}">
 			
 			<div class="thumbnail project-thumbnail" ng-switch-when="true">
 
-				<div class='span2 owner-pic'><img src = "{{proj.owner.avatar_url}}" class = "img-rounded" style = 'width:100px' alt = 'Owner' />
+				<div class='span2 owner-pic'><img src = "{{proj.owner.avatar_url}}" title="{{proj.owner.login}}" class = "img-rounded" style = 'width:100px' alt = 'Owner' />
 				</div>
 				<div ng-init="person = getdata(proj);" class = "span2 collaborator-pics" >
 					<h3 class='project-title'><a>{{trim(proj.name)}}</a></h3>
@@ -20,10 +20,10 @@
 				</div>
 				<div class='span3 pagination-centered' ng-controller="MilestoneCtrl">
 					<div class="progress progress-success  active" id='project-data' ng-init = "milestones = fetchmilestone(proj) ">
-						<a href='javascript:;' ng-click="onSelect(proj.owner.login,proj.name)">
-						<div class="bar" id='bar-<%= project[:id] %>' style="width: {{health(milestones)}}%;">
+						<a href='' ng-click="onSelect(proj.owner.login,proj.name)">
+						<div class="bar" id='bar-<%= project[:id] %>' style="width: {{health(milestones,proj.id)}}%;">
 							<p>
-								{{health(milestones)}}%
+								{{health(milestones,proj.id)}}%
 							</p>
 						</div></a>
 					</div>
@@ -32,7 +32,7 @@
 
 				<div>
 
-					<a href='javascript:;' ng-click="onSelect(proj.owner.login,proj.name)" class='btn btn-warning' id='mil_{{proj.id}}' >Milestones</a>
+					<a href='' ng-click="onSelect(proj.owner.login,proj.name)" class='btn btn-warning' id='mil_{{proj.id}}' >Milestones</a>
 					<a href='' class='btn unfav' data-id='{{proj.id}}'><i class='icon-eye-close'></i>Not
 					Favorite</a>
 				</div>
@@ -46,19 +46,19 @@
 		<li ng-repeat="proj in projects" class="span4 pagination-centered"  ng-class = "getClass(proj.id)" ng-init = "include = favorite(proj.id)" ng-switch on="include"  id = "unfav_{{proj.id}}">
 			<div class="thumbnail project-thumbnail">
 
-				<div class='span2 owner-pic'><img src = "{{proj.owner.avatar_url}}" class = "img-rounded" style = 'width:100px' alt = 'Owner' />
+				<div class='span2 owner-pic'><img src = "{{proj.owner.avatar_url}}" class = "img-rounded" title="{{proj.owner.login}}" style = 'width:100px' alt = 'Owner' />
 				</div>
 				<div ng-init="person = getdata(proj);" class = "span2 collaborator-pics" >
 					<h3 class='project-title'><a>{{trim(proj.name)}}</a></h3>
 					{{getdataofdata(person,proj.name)}}
-					<div ng-class="getId(proj.name)" data-count ="false">
+					<div ng-class="getId(proj.name)" data-count ="false" >
 
 					</div>
 				</div>
-				<div class='span3 pagination-centered' ng-controller="MilestoneCtrl">
+				<div class='span3 pagination-centered' ng-controller="MilestoneCtrl" >
 					<div class="progress progress-success  active" id='project-data' ng-init = "milestones = fetchmilestone(proj) ">
 						<a href='javascript:;' ng-click="onSelect(proj.owner.login,proj.name)">
-						<div class="bar" id='bar-<%= project[:id] %>' style="width: {{health(milestones)}}%;">
+						<div class="bar" id='bar-<%= project[:id] %>' style="width: {{health(milestones,proj.id)}}%;">
 							<p>
 								{{health(milestones,proj.id)}}%
 							</p>
@@ -69,13 +69,13 @@
 
 				<div>
 
-					<a href='javascript:;' class='btn btn-warning'  ng-click="onSelect(proj.owner.login,proj.name)" id='mil_{{proj.id}}' >Milestones</a>
+					<a href='' class='btn btn-warning'  ng-click="onSelect(proj.owner.login,proj.name)" id='mil_{{proj.id}}' >Milestones</a>
 					<a href='' class='btn fav' data-id='{{proj.id}}'><i class='icon-eye-open'></i> Favorite</a>
 				</div>
 			</div>
 		</li>
-	</ul>
-
+	</ul  >
+{{setProjects(project)}}
 	{{hidelis()}}
 </div >
 

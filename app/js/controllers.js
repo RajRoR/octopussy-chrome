@@ -3,12 +3,14 @@
 /* Controllers */
 
 	function UserCtrl($scope, $location,GithubRepo) {
+		
 		if (localStorage["user"]) {
 			$location.path(['', 'github', 'user', ].join('/'));
 
 		 }
 
 		$scope.saveGithubUser = function () {
+			
 			$scope.github_username = document.login.github_username.value;
 			$scope.github_password = document.login.github_password.value;
 			if($scope.github_username && $scope.github_password) 
@@ -91,14 +93,11 @@
 
 	angular.module('project', ['Github']);
 
-var counts = 0
+
 	function ProjectCtrl($scope, $location, $routeParams, GithubRepo, GithubRepo2, GithubRepo3) {
 	
 		$scope.data = null
-	$scope.datacall= function(){
-		counts = counts + 1
-		$('h1').text(counts)
-	}
+	
 		if (!localStorage["user"]) {
 			$location.path([''].join('/'));
 		}
@@ -107,14 +106,11 @@ var counts = 0
 			$scope.projects = GithubRepo.query({
 				access_token : localStorage["token"]
 			});
+			
 		} else {
 			$scope.projects = GithubRepo2.query({
 				user : $routeParams.user
 			});
-		}
-	var counts = 0 
-	$scope.projectcall = function(project) {
-		
 		}
 	
 		$scope.onSelect = function(owner, name) {
@@ -123,6 +119,7 @@ var counts = 0
 			$location.path(['', 'github', $routeParams.user, name, ''].join('/'));
 		}
 		$scope.getdata = function(project) {
+			
 			$scope.callobrator = GithubRepo3.query({
 				user : project.owner.login,
 				repo : project.name
@@ -135,6 +132,7 @@ var counts = 0
 		}
 	
 		$scope.getdataofdata = function(project, name) {
+			
 			$scope.data = ""
 			var count = $('.' + name).attr('data-count')
 			$('.' + name).empty()
@@ -152,6 +150,11 @@ var counts = 0
 				return "Unfavorite";
 			}
 		}
+		$scope.setProjects = function(project) {
+			localStorage["repos"] = project;
+		}
+		
+		
 	}
 
 
@@ -222,6 +225,7 @@ var counts = 0
 		}
 	
 		$scope.health = function(milestones, id) {
+			localStorage[id+"/mill"] = milestones;
 			var openIssues = 0;
 			var closedIssues = 0;
 			var index = 0
@@ -267,6 +271,11 @@ var counts = 0
 		}
 			// $scope.issues = GithubIssue.query({user:$routeParams.user, repo:$routeParams.repo, milestone:$routeParams.milestone})
 		}
+		$scope.settask = function(issue){
+			alert(issue)
+		}
+		
+		
 	}
 
 		$(document).on('click','.fav',function(event){
