@@ -263,14 +263,14 @@
 			var data = $('#unfav_'+$(this).attr('data-id')).html()
 			$('#unfav_'+$(this).attr('data-id')).empty()
 			$('#unfav_'+$(this).attr('data-id')).hide()
-			$('#fav_'+$(this).attr('data-id')).html(data)
+			
 		})
 		$(document).on('click','.unfav',function(){
 			localStorage.removeItem($(this).attr('data-id'));
 			var data = $('#fav_'+$(this).attr('data-id')).html()
 			$('#fav_'+$(this).attr('data-id')).empty()
 			$('#fav_'+$(this).attr('data-id')).hide()
-			$('#unfav_'+$(this).attr('data-id')).html(data)
+			
 		})
 			
 
