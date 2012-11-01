@@ -141,8 +141,6 @@
 		}
 	
 		$scope.getdataofdata = function(project, name) {
-			
-			alert(name)
 			if(localStorage["user"] && project) 	
 			{
 			localStorage[name+"/coll"] = JSON.stringify(project);
@@ -209,7 +207,6 @@
 		}
 	
 		$scope.fetchmilestone = function(project) {
-			alert(project)	
 			var millstones = JSON.parse( localStorage.getItem(name+"/mill" ) );
 			if(millstones) 
 			{
@@ -309,9 +306,7 @@
 		}
 			// $scope.issues = GithubIssue.query({user:$routeParams.user, repo:$routeParams.repo, milestone:$routeParams.milestone})
 		}
-		$scope.settask = function(issue){
-			alert(issue)
-		}
+		
 		
 		
 	}
