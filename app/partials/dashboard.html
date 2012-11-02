@@ -21,9 +21,9 @@
 				<div class='span3 pagination-centered' ng-controller="MilestoneCtrl">
 					<div class="progress progress-success  active" id='project-data' ng-init = "milestones = fetchmilestone(proj) ">
 						<a href='' ng-click="onSelect(proj.owner.login,proj.name)">
-						<div class="bar" id='bar-<%= project[:id] %>' style="width: {{health(milestones,proj.id)}}%;">
+						<div class="bar" id='bar-<%= project[:id] %>' style="width: {{health(milestones,proj.id,proj.name)}}%;">
 							<p>
-								{{health(milestones,proj.id)}}%
+								{{health(milestones,proj.id,proj.name)}}%
 							</p>
 						</div></a>
 					</div>
@@ -58,9 +58,9 @@
 				<div class='span3 pagination-centered' ng-controller="MilestoneCtrl" >
 					<div class="progress progress-success  active" id='project-data' ng-init = "milestones = fetchmilestone(proj) ">
 						<a href='javascript:;' ng-click="onSelect(proj.owner.login,proj.name)">
-						<div class="bar" id='bar-<%= project[:id] %>' style="width: {{health(milestones,proj.id)}}%;">
+						<div class="bar" id='bar-<%= project[:id] %>' style="width: {{health(milestones,proj.id,proj.name)}}%;">
 							<p>
-								{{health(milestones,proj.id)}}%
+								{{health(milestones,proj.id,proj.name)}}%
 							</p>
 						</div></a>
 					</div>
@@ -75,7 +75,7 @@
 			</div>
 		</li>
 	</ul  >
-{{setProjects(project)}}
+{{setProjects(projects)}}
 	{{hidelis()}}
 </div >
 

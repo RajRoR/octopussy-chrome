@@ -101,10 +101,18 @@
 		if (!localStorage["user"]) {
 			$location.path([''].join('/'));
 		}
-	
+	var projects = JSON.parse( localStorage.getItem( 'repos' ) )
+			if(projects)
+			{
+				$scope.projects = projects
+			}
+			else
+			{
 		if (localStorage["token"]) {
+			
 			$scope.projects = GithubRepo.query({
 				access_token : localStorage["token"]
+				
 			});
 			
 		} else {
@@ -112,27 +120,38 @@
 				user : $routeParams.user
 			});
 		}
-	
+		
+	}
 		$scope.onSelect = function(owner, name) {
 			localStorage["owner"] = owner;
 			localStorage["name"] = name;
 			$location.path(['', 'github', $routeParams.user, name, ''].join('/'));
 		}
 		$scope.getdata = function(project) {
-			
+		var collab = JSON.parse( localStorage.getItem(project.name+"/coll") )
+			if(collab)
+			{
+				$scope.callobrator = collab
+			}
+			else
+			{	
 			$scope.callobrator = GithubRepo3.query({
 				user : project.owner.login,
 				repo : project.name
 			})
 			return $scope.callobrator;
 		}
-	
+	}
 		$scope.getId = function(name) {
 			return name;
 		}
 	
 		$scope.getdataofdata = function(project, name) {
-			
+		  if(project)
+			{
+				localStorage.setItem( name+"/coll", JSON.stringify(project) );
+			}		
+	
 			$scope.data = ""
 			var count = $('.' + name).attr('data-count')
 			$('.' + name).empty()
@@ -151,7 +170,7 @@
 			}
 		}
 		$scope.setProjects = function(project) {
-			localStorage["repos"] = project;
+			localStorage.setItem( 'repos', JSON.stringify(project) );
 		}
 		
 		
@@ -164,8 +183,16 @@
 		self.selectedMilestone = null;
 	
 		if (localStorage["name"]) {
+			
 			var user = localStorage["owner"];
 			var name = localStorage["name"];
+			var millstones = JSON.parse( localStorage.getItem(name+"/mill" ) );
+			if(millstones) 
+			{
+				$scope.milestones = millstones
+			}
+			else{
+		
 			if (localStorage["token"]) {
 				$scope.milestones = GithubMilestone.query({
 					access_token : localStorage["token"],
@@ -177,12 +204,19 @@
 					user : user,
 					repo : name
 				})
+			}
 			}
 		} else {
 			$scope.milestones = [];
 		}
 	
 		$scope.fetchmilestone = function(project) {
+			var millstones = JSON.parse( localStorage.getItem(name+"/mill" ) );
+			if(millstones) 
+			{
+				$scope.milestones = millstones
+			}
+			else{
 			if (localStorage["token"]) {
 				$scope.milestones = GithubMilestone.query({
 					access_token : localStorage["token"],
@@ -198,7 +232,7 @@
 				return $scope.milestones;
 			}
 		}
-	
+	}
 		$scope.onselectproject = function() {
 			$location.path(['', 'github', $routeParams.user, ''].join('/'));
 		}
@@ -224,8 +258,9 @@
 			return milestone.closed_issues / (milestone.closed_issues + milestone.open_issues) * 100;
 		}
 	
-		$scope.health = function(milestones, id) {
-			localStorage[id+"/mill"] = milestones;
+		$scope.health = function(milestones, id,name) {
+			localStorage.setItem( name+"/mill", JSON.stringify(milestones) );
+			
 			var openIssues = 0;
 			var closedIssues = 0;
 			var index = 0
@@ -271,9 +306,7 @@
 		}
 			// $scope.issues = GithubIssue.query({user:$routeParams.user, repo:$routeParams.repo, milestone:$routeParams.milestone})
 		}
-		$scope.settask = function(issue){
-			alert(issue)
-		}
+		
 		
 		
 	}
