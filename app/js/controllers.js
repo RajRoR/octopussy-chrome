@@ -38,9 +38,7 @@
 			}
 
 			$scope.removeGithubUser = function () {
-				localStorage["owner"]="";
-				localStorage["name"]=""	;
-				localStorage["user"] = "";
+				localStorage.clear();
 				$location.path([''].join('/'));
 			}
 			$scope.hidelis = function () {
@@ -62,8 +60,6 @@
 				}
 			}	
 				
-			
-			
 			$scope.checkUser= function (){
 				if (localStorage["user"]) {
 					return "yes"
@@ -93,7 +89,6 @@
 
 	angular.module('project', ['Github']);
 
-
 	function ProjectCtrl($scope, $location, $routeParams, GithubRepo, GithubRepo2, GithubRepo3) {
 	
 		$scope.data = null
@@ -101,7 +96,9 @@
 		if (!localStorage["user"]) {
 			$location.path([''].join('/'));
 		}
-	var projects = JSON.parse( localStorage.getItem( 'repos' ) )
+
+		var projects = JSON.parse( localStorage.getItem( 'repos' ) )
+
 			if(projects)
 			{
 				$scope.projects = projects
@@ -120,58 +117,67 @@
 				user : $routeParams.user
 			});
 		}
-		
-	}
+
+		}
+
 		$scope.onSelect = function(owner, name) {
 			localStorage["owner"] = owner;
 			localStorage["name"] = name;
 			$location.path(['', 'github', $routeParams.user, name, ''].join('/'));
 		}
-		$scope.getdata = function(project) {
-		var collab = JSON.parse( localStorage.getItem(project.name+"/coll") )
-			if(collab)
-			{
-				$scope.callobrator = collab
+			$scope.getdata = function(project) {
+
+					var collab = JSON.parse( localStorage.getItem(project.name+"/coll") )
+					if(collab)
+					{
+						$scope.callobrator = collab
+						return $scope.callobrator;
+
+					}
+					else
+					{	
+					$scope.callobrator = GithubRepo3.query({
+						user : project.owner.login,
+						repo : project.name
+					})
+					return $scope.callobrator;
+					}
 			}
-			else
-			{	
-			$scope.callobrator = GithubRepo3.query({
-				user : project.owner.login,
-				repo : project.name
-			})
-			return $scope.callobrator;
-		}
-	}
-		$scope.getId = function(name) {
-			return name;
-		}
 	
-		$scope.getdataofdata = function(project, name) {
-		  if(project)
-			{
-				localStorage.setItem( name+"/coll", JSON.stringify(project) );
-			}		
+			$scope.getId = function(name) {
+				return name;
+			}
 	
-			$scope.data = ""
-			var count = $('.' + name).attr('data-count')
-			$('.' + name).empty()
-			_.each(project, function(data) {
+			$scope.getdataofdata = function(project, name) {
+
+				if(localStorage["user"] && project) 	
+				{
+				localStorage[name+"/coll"] = JSON.stringify(project);
+				}
+
+				$scope.data = ""
+				var count = $('.' + name).attr('data-count')
+				$('.' + name).empty()
+				_.each(project, function(data) {
 					$('.' + name).attr('data-count', "true");
 					$('.' + name).append("<img src = '" + data.avatar_url + "' title ='" + data.login + "'  class = 'collaborators-small img-rounded'  alt = 'Collaborator'/>");
-				});
-			return $scope.data;
-		}
-	
-		$scope.getClass = function(id) {
-			if (localStorage[id]) {
-				return "Favorite";
-			} else {
-				return "Unfavorite";
+					});
+				return $scope.data;
 			}
-		}
-		$scope.setProjects = function(project) {
-			localStorage.setItem( 'repos', JSON.stringify(project) );
-		}
+	
+			$scope.getClass = function(id) {
+					if (localStorage[id]) {
+						return "Favorite";
+					} else {
+						return "Unfavorite";
+					}
+			}
+			$scope.setProjects = function(project) {
+				if(localStorage["user"] && project) 
+				{ 
+				localStorage.setItem( 'repos', JSON.stringify(project) );
+				}
+			}
 		
 		
 	}
@@ -186,13 +192,15 @@
 			
 			var user = localStorage["owner"];
 			var name = localStorage["name"];
-			var millstones = JSON.parse( localStorage.getItem(name+"/mill" ) );
+
+		var millstones = JSON.parse( localStorage.getItem(name+"/mill" ) );
+
 			if(millstones) 
 			{
 				$scope.milestones = millstones
 			}
 			else{
-		
+
 			if (localStorage["token"]) {
 				$scope.milestones = GithubMilestone.query({
 					access_token : localStorage["token"],
@@ -205,7 +213,9 @@
 					repo : name
 				})
 			}
-			}
+
+		}
+
 		} else {
 			$scope.milestones = [];
 		}
@@ -214,7 +224,10 @@
 			var millstones = JSON.parse( localStorage.getItem(name+"/mill" ) );
 			if(millstones) 
 			{
-				$scope.milestones = millstones
+
+				$scope.milestones = millstones;
+				return $scope.milestones;
+
 			}
 			else{
 			if (localStorage["token"]) {
@@ -232,7 +245,10 @@
 				return $scope.milestones;
 			}
 		}
-	}
+
+		}
+	
+
 		$scope.onselectproject = function() {
 			$location.path(['', 'github', $routeParams.user, ''].join('/'));
 		}
@@ -259,8 +275,12 @@
 		}
 	
 		$scope.health = function(milestones, id,name) {
-			localStorage.setItem( name+"/mill", JSON.stringify(milestones) );
-			
+
+			if(localStorage["user"] && milestones)  	
+			{
+			localStorage[name+"/mill"] = JSON.stringify(milestones);
+			}
+
 			var openIssues = 0;
 			var closedIssues = 0;
 			var index = 0
@@ -323,7 +343,7 @@
 			$('#unfav_'+$(this).attr('data-id')).hide()
 			$('#fav_'+$(this).attr('data-id')).show()
 			$('#fav_'+$(this).attr('data-id')).html(data)
-		})
+	})
 		$(document).on('click','.unfav',function(event){
 			event.preventDefault();
 			localStorage.removeItem($(this).attr('data-id'));
@@ -334,9 +354,8 @@
 			var data = $('#fav_'+$(this).attr('data-id')).html()
 			$('#fav_'+$(this).attr('data-id')).empty()
 			$('#fav_'+$(this).attr('data-id')).hide()
-			$('#unfav_'+$(this).attr('data-id')).show()
+		$('#unfav_'+$(this).attr('data-id')).show()
 			$('#unfav_'+$(this).attr('data-id')).html(data)
-			
 		})
 				
 		
